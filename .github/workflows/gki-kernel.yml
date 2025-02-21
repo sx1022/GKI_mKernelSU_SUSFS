@@ -214,13 +214,13 @@ jobs:
             echo "Applying SUSFS patches for MKSU..."
             cp ../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./KernelSU/
             cd ./KernelSU
+            cp ./patch/mksu_susfs_fix.patch ./
             patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
           fi
 
           # Change to common directory and apply common SUSFS patch
           cd ../common
           patch -p1 < 50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch || true
-          cp ../KernelSU/patch/mksu_susfs_fix.patch ../KernelSU/
           cd ../KernelSU
           patch -p1 < mksu_susfs_fix.patch
       - name: Apply Hide Stuff Patches
